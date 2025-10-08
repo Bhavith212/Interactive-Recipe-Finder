@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Recipe Finder</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+</head>
+<body>
+    <div class="header"></div>
+    <nav class="navbar">
+        <div class="nav-logo">🍴 Recipe Finder</div>
+        <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-section="recommendations">Recommendations</a></li>
+            <li><a href="#" class="nav-link" data-section="favourites">Favourites</a></li>
+        </ul>
+    </nav>
+    <div class="hero">
+        <h1>Recipes for Every Home</h1>
+        <p>Here you can find various recipes to try at home.</p>
+        <div class="searchBar">
+            <input id="searchInput" type="text" placeholder="Enter ingredients">
+            <button id="searchBtn">
+                <img src="./images/search.svg" alt="search_image">
+            </button>
+        </div>
+        <div class="filterBar">
+            <select id="cuisineFilter">
+                <option value="">Cuisine (Any)</option>
+                <option value="italian">Italian</option>
+                <option value="mexican">Mexican</option>
+                <option value="asian">Asian</option>
+                <option value="mediterranean">Mediterranean</option>
+                <option option value="american">American</option>
+            </select>               <select id="dietFilter">
+                <option value="">Diet (Any)</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten-free">Gluten-Free</option>
+            </select>
+            <select id="timeFilter">
+                <option value="">Max Time (Any)</option>
+                <option value="30">Under 30 min</option>
+                <option value="45">Under 45 min</option>
+                <option value="60">Under 60 min</option>
+            </select>
+        </div>
+    </div>
+    <div class="main-content">
+        <div id="results" class="active-section"></div>
+        <div id="favorites-list" class="hidden-section"></div> 
+        <div class="recipeDetails"></div>
+        <button id="download-pdf-button" style="display:none;">Download Recipe as PDF</button>
+    </div>
+    <footer class="footer">
+        <p id="copyright-text"></p>
+    </footer>
+    <script src="./index.js"></script>
+</body>
+</html>
