@@ -11,8 +11,13 @@ const navLinks = document.querySelectorAll('.nav-link');
 const navBar = document.querySelector('.navbar');
 
 
-const KEY = 'demo';
-
+async function fetchFromNetlifyFunction(endpoint, params = {}) {
+    const url = new URL(`/.netlify/functions/fetchRecipes`);
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    return await response.json();
+}
 
 // NAVBAR LOGIC
 
@@ -161,26 +166,10 @@ async function doSearch(query, cuisine, diet, maxTime) {
     recipeDetails.innerHTML = '';
     downloadButton.style.display = 'none';
 
-    let searchUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=5&apiKey=${KEY}`;
-    if (cuisine) {
-        searchUrl += `&cuisine=${cuisine}`;
-    }
-    if (diet) {
-        searchUrl += `&diet=${diet}`;
-    }
-    if (maxTime) {
-        searchUrl += `&maxReadyTime=${maxTime}`;
-    }
-    
-    results.innerHTML = '<h2>Searching...</h2>'; 
+    results.innerHTML = '<h2>Searching...</h2>';
 
-    try{
-        const response = await fetch(searchUrl);
-        
-        if(!response.ok){
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
+    try {
+        const data = await fetchFromNetlifyFunction('search', { query, cuisine, diet, maxTime });
         console.log(data);
         displayRecipeList(data.results);
     } catch (error) {
@@ -212,17 +201,13 @@ window.onload = function() {
 async function fetchRecommendations() {
     recipeDetails.innerHTML = '';
     downloadButton.style.display = 'none';
-    
-    const randomUrl = `https://api.spoonacular.com/recipes/random?number=6&apiKey=${KEY}`;
-    
+
     results.innerHTML = '<h2>Loading Recommended Recipes...</h2>';
 
     try {
-        const response = await fetch(randomUrl);
-        const data = await response.json();
+        const data = await fetchFromNetlifyFunction('random', { number: 6 });
         const isrecommendation = true;
-        displayRecipeList(data.recipes, isrecommendation); 
-
+        displayRecipeList(data.recipes, isrecommendation);
     } catch (error) {
         console.error('Failed to fetch recommendations:', error);
         results.innerHTML = '<h2>Recommended Recipes</h2><p>Failed to load recommendations.</p>';
@@ -276,16 +261,10 @@ async function getFullRecipe(recipeId) {
     recipeDetails.style.display = 'block';
     recipeDetails.scrollIntoView({ behavior: 'smooth' });
 
-    const recipeUrl = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${KEY}`;
     recipeDetails.innerHTML = '<h2>Loading Recipe Details...</h2>';
-    
-    try{
-        const response = await fetch(recipeUrl);
 
-        if(!response.ok){
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
+    try {
+        const data = await fetchFromNetlifyFunction('info', { id: recipeId });
         console.log(data);
         displayFullRecipe(data);
         downloadButton.style.display = 'block';
