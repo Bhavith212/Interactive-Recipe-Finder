@@ -11,7 +11,7 @@ const navLinks = document.querySelectorAll('.nav-link');
 const navBar = document.querySelector('.navbar');
 
 
-const KEY = '00482185c107495eb4f9cffcad04e2f4';
+const KEY = 'demo';
 
 
 // NAVBAR LOGIC
@@ -392,4 +392,5 @@ downloadButton.addEventListener("click", async () => {
 
     pdf.save(`${title}.pdf`);
 });
+
 
