@@ -6,7 +6,6 @@ const downloadButton = document.getElementById('download-pdf-button');
 const cuisineFilter = document.getElementById('cuisineFilter');
 const dietFilter = document.getElementById('dietFilter');
 const timeFilter = document.getElementById('timeFilter');
-const KEY = '00482185c107495eb4f9cffcad04e2f4';
 const favoritesList = document.getElementById('favorites-list');
 const navLinks = document.querySelectorAll('.nav-link');
 const navBar = document.querySelector('.navbar');
@@ -75,7 +74,7 @@ btn.addEventListener('click', () => {
 });
 
 // FAVORITES LOGIC
-
+const KEY = '00482185c107495eb4f9cffcad04e2f4';
 function getFavorites() {
     return JSON.parse(localStorage.getItem("favorites")) || [];
 }
@@ -219,7 +218,6 @@ async function fetchRecommendations() {
         const data = await response.json();
         const isrecommendation = true;
         displayRecipeList(data.recipes, isrecommendation); 
-
     } catch (error) {
         console.error('Failed to fetch recommendations:', error);
         results.innerHTML = '<h2>Recommended Recipes</h2><p>Failed to load recommendations.</p>';
@@ -386,9 +384,3 @@ downloadButton.addEventListener("click", async () => {
 
     pdf.save(`${title}.pdf`);
 });
-
-    pdf.save(`${title}.pdf`);
-});
-
-
-
