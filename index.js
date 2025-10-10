@@ -6,13 +6,10 @@ const downloadButton = document.getElementById('download-pdf-button');
 const cuisineFilter = document.getElementById('cuisineFilter');
 const dietFilter = document.getElementById('dietFilter');
 const timeFilter = document.getElementById('timeFilter');
+const KEY = '00482185c107495eb4f9cffcad04e2f4';
 const favoritesList = document.getElementById('favorites-list');
 const navLinks = document.querySelectorAll('.nav-link');
 const navBar = document.querySelector('.navbar');
-
-
-const KEY = 'demo';
-
 
 // NAVBAR LOGIC
 
@@ -392,5 +389,6 @@ downloadButton.addEventListener("click", async () => {
 
     pdf.save(`${title}.pdf`);
 });
+
 
 
