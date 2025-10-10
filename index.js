@@ -381,6 +381,5 @@ downloadButton.addEventListener("click", async () => {
         pdf.text(lines, 20, y);
         y += lines.length * 7;
     });
-
     pdf.save(`${title}.pdf`);
 });
